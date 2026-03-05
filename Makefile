@@ -1,5 +1,7 @@
 # Raspberry Pi 5 Ansible管理用Makefile
 
+.DEFAULT_GOAL := help
+
 .PHONY: \
 	ping \
 	ssh-check info syntax-check \
