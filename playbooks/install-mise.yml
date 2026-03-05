@@ -1,0 +1,61 @@
+---
+- name: mise インストール
+  hosts: rpi5
+  become: yes
+
+  tasks:
+    - name: システム情報確認
+      debug:
+        msg: |
+          OS: {{ ansible_distribution }} {{ ansible_distribution_version }}
+          アーキテクチャ: {{ ansible_architecture }}
+
+    - name: パッケージリスト更新
+      apt:
+        update_cache: yes
+
+    - name: 必要なパッケージをインストール
+      apt:
+        name:
+          - curl
+        state: present
+
+    - name: mise GPGキー用ディレクトリ作成
+      file:
+        path: /etc/apt/keyrings
+        state: directory
+        mode: '0755'
+
+    - name: mise公式GPGキーをダウンロード
+      shell: |
+        curl -fSs https://mise.jdx.dev/gpg-key.pub | sudo tee /etc/apt/keyrings/mise-archive-keyring.asc 1> /dev/null
+      args:
+        executable: /bin/bash
+
+    - name: miseリポジトリを追加
+      shell: |
+        echo "deb [signed-by=/etc/apt/keyrings/mise-archive-keyring.asc] https://mise.jdx.dev/deb stable main" | sudo tee /etc/apt/sources.list.d/mise.list
+      args:
+        executable: /bin/bash
+
+    - name: パッケージリスト更新（mise リポジトリ追加後）
+      apt:
+        update_cache: yes
+
+    - name: mise をインストール
+      apt:
+        name:
+          - mise
+        state: present
+
+    - name: ansible_user の .bashrc に mise activate を追加
+      lineinfile:
+        path: "/home/{{ ansible_user }}/.bashrc"
+        line: "eval \"$(/usr/bin/mise activate bash)\""
+        create: yes
+        state: present
+      become_user: "{{ ansible_user }}"
+
+    - name: インストール完了
+      debug:
+        msg: "mise のインストールが完了しました"

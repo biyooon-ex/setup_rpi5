@@ -117,7 +117,13 @@ make install-docker
 make install-zenoh
 ```
 
-### 11. apt upgrade
+### 11. mise
+
+```bash
+make install-mise
+```
+
+### 12. apt upgrade
 
 ```bash
 make apt-upgrade
