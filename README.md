@@ -123,7 +123,13 @@ make install-zenoh
 make install-mise
 ```
 
-### 12. apt upgrade
+### 11. dev-tools
+
+```bash
+make install-dev-tools
+```
+
+### 13. apt upgrade
 
 ```bash
 make apt-upgrade

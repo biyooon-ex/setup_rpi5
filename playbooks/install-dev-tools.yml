@@ -1,0 +1,22 @@
+---
+- name: 開発ツール インストール
+  hosts: rpi5
+  become: yes
+
+  vars:
+    dev_tools_packages:
+      - build-essential
+
+  tasks:
+    - name: パッケージリスト更新
+      apt:
+        update_cache: yes
+
+    - name: 開発ツールをインストール
+      apt:
+        name: "{{ dev_tools_packages }}"
+        state: present
+
+    - name: インストール対象表示
+      debug:
+        msg: "インストール対象: {{ dev_tools_packages | join(', ') }}"

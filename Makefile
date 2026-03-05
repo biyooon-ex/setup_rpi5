@@ -8,7 +8,7 @@
 	disable-auto-update disable-auto-update-dry \
 	install-docker install-docker-dry \
 	install-zenoh install-zenoh-dry \
-	install-mise \
+	install-mise install-dev-tools \
 	install-chrony reboot check-time-sync \
 	check-ip disable-dhcp-eth0 disable-dhcp-wlan0 \
 	apt-upgrade dry-run verbose inventory help
@@ -63,6 +63,10 @@ install-zenoh-dry:
 # mise インストール
 install-mise:
 	ansible-playbook playbooks/install-mise.yml
+
+# 開発ツール インストール
+install-dev-tools:
+	ansible-playbook playbooks/install-dev-tools.yml
 
 # chrony インストール
 install-chrony:
@@ -120,6 +124,7 @@ help:
 	@echo "  make install-zenoh           - zenoh バイナリインストール"
 	@echo "  make install-zenoh-dry       - zenoh バイナリインストール（ドライラン）"
 	@echo "  make install-mise            - mise インストール"
+	@echo "  make install-dev-tools       - 開発ツール インストール"
 	@echo "  make install-chrony          - chrony インストール"
 	@echo "  make reboot                  - システム再起動"
 	@echo "  make check-time-sync         - 時刻同期状態チェック"
