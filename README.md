@@ -123,7 +123,7 @@ make install-zenoh
 make install-mise
 ```
 
-### 11. dev-tools
+### 12. dev-tools
 
 ```bash
 make install-dev-tools
