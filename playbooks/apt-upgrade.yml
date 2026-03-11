@@ -4,6 +4,14 @@
   become: yes
 
   tasks:
+    - name: noble-updates が無い場合に Suites へ追加
+      replace:
+        path: /etc/apt/sources.list.d/ubuntu.sources
+        regexp: '^Suites:\s*noble$'
+        replace: 'Suites: noble noble-updates'
+      tags:
+        - noble-updates-repo
+
     - name: パッケージリスト更新
       apt:
         update_cache: yes

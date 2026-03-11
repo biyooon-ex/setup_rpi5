@@ -4,14 +4,14 @@
 
 .PHONY: \
 	ping \
-	ssh-check info syntax-check \
+	ssh-check syntax-check \
 	disable-auto-update disable-auto-update-dry \
 	install-docker install-docker-dry \
 	install-zenoh install-zenoh-dry \
 	install-mise install-dev-tools \
 	install-chrony reboot check-time-sync \
 	check-ip disable-dhcp-eth0 disable-dhcp-wlan0 \
-	apt-upgrade dry-run verbose inventory help
+	apt-upgrade inventory-list help
 
 # SSH接続確認
 ping:
@@ -20,10 +20,6 @@ ping:
 # 詳細なSSH接続確認
 ssh-check:
 	ansible-playbook playbooks/ssh-check.yml
-
-# システム情報取得
-info:
-	ansible rpi5 -m setup
 
 # 構文チェック
 syntax-check:
@@ -96,27 +92,17 @@ disable-dhcp-eth0:
 disable-dhcp-wlan0:
 	ansible-playbook playbooks/disable-dhcp-wlan0.yml
 
-# ドライラン
-dry-run:
-	ansible-playbook --check playbooks/ssh-check.yml
-
-# 詳細出力で実行
-verbose:
-	ansible-playbook -vvv playbooks/ssh-check.yml
-
 # インベントリ確認
-inventory:
+inventory-list:
 	ansible-inventory --list
 
 # ヘルプ
 help:
 	@echo "利用可能なコマンド:"
-	@echo "  make ping        - 基本的なSSH接続確認（全台）"
-	@echo "  make ssh-check   - 詳細なSSH接続確認とシステム情報取得"
-	@echo "  make info        - システム情報のみ取得"
-	@echo "  make syntax-check - playbook構文チェック"
-	@echo "  make dry-run     - ドライラン実行"
-	@echo "  make verbose     - 詳細出力で実行"
+	@echo "  make inventory-list          - インベントリ確認"
+	@echo "  make ping                    - 基本的なSSH接続確認（全台）"
+	@echo "  make ssh-check               - 詳細なSSH接続確認とシステム情報取得"
+	@echo "  make syntax-check            - playbook構文チェック"
 	@echo "  make disable-auto-update     - 自動アップデート無効化"
 	@echo "  make disable-auto-update-dry - 自動アップデート無効化（ドライラン）"
 	@echo "  make install-docker          - Docker インストール"
