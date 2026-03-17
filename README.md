@@ -2,6 +2,12 @@
 
 Raspberry Pi 5 (Ubuntu Server 24.04.4 LTS 64-bit) の初期セットアップを自動化する Ansible playbook です。
 
+## 目的
+
+このリポジトリは [Giocci Platform](https://github.com/biyooon-ex/giocci_platform) の性能計測を行う際に利用する Raspberry Pi 5 x 3 台のセットアップ自動化を目的としています。
+
+※性能計測を行うためには giocci client 、giocci relay 、 giocci engine を動作させる実機が 3 台必要です。
+
 ## 前提条件
 
 1. Raspberry Pi Imager で Ubuntu Server 24.04.4 LTS (64-bit) を SD に焼く
@@ -174,3 +180,4 @@ make install-dev-tools
 ## 補足
 
 - `make help` で利用可能なコマンド一覧を表示できます。
+- inventory.yml の host 識別子を (ex. rpi5-00) 書き換える場合は、リポジトリ内の識別子を検索し置換するようにしてください。
